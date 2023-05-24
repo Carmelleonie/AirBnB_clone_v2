@@ -1,1 +1,1 @@
-/python/(<text>)
+/number/<n>
