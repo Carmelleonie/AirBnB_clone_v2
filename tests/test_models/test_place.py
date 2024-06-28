@@ -1,70 +1,41 @@
 #!/usr/bin/python3
-"""Place classs test"""
 
-from tests.test_models.test_base_model import test_basemodel
+import time
+import unittest
+from datetime import datetime
 from models.place import Place
+from models.base_model import BaseModel
 
 
-class test_Place(test_basemodel):
-    """ Test class for place.py """
+class TestPlace(unittest.TestCase):
 
-    def __init__(self, *args, **kwargs):
-        """ test_Place class constructor"""
-        super().__init__(*args, **kwargs)
-        self.name = "Place"
-        self.value = Place
+    @classmethod
+    def setUpClass(cls):
+        cls.place = Place("122004", "12345678", "The Alfred Hotel Amsterdam", "Large",
+                          2, 1, 2, 73, 2.4, 1.3)
 
-    def test_city_id(self):
-        """ Tests the city id """
-        new = self.value()
-        self.assertNotEqual(type(new.city_id), str)
+    @classmethod
+    def tearDownClass(cls):
+        del cls.place
 
-    def test_user_id(self):
-        """ Tests the user id"""
-        new = self.value()
-        self.assertNotEqual(type(new.user_id), str)
+    def Test_place_inheritence(self):
+        self.assertIsInstance(self.place, BaseModel)
+        self.assertTrue(hasattr(self.place, "id"))
+        self.assertTrue(hasattr(self.place, "created_at"))
+        self.assertTrue(hasattr(self.place, "updated_at"))
 
-    def test_name(self):
-        """ Tests the name"""
-        new = self.value()
-        self.assertNotEqual(type(new.name), str)
+    def Test_place_arg(self):
+        self.assertIsInstance(self.place, Place)
+        self.assertTrue(self.place.city_id == "122004")
+        self.assertTrue(self.place.user_id == "12345678")
+        self.assertTrue(self.place.name == "The Alfred Hotel Amsterdam")
+        self.assertTrue((self.place.description == "Large"))
+        self.assertTrue(self.place.number_rooms == 2)
+        self.assertTrue(self.place.number_bathrooms == 1)
+        self.assertTrue(self.place.max_guest == 2)
+        self.assertTrue((self.place.price_by_night == 73))
+        self.assertTrue(self.place.latitude == 2.4)
+        self.assertTrue(self.place.longitude == 1.3)
 
-    def test_description(self):
-        """ Tests the description """
-        new = self.value()
-        self.assertNotEqual(type(new.description), str)
-
-    def test_number_rooms(self):
-        """ Tests the number of rooms"""
-        new = self.value()
-        self.assertNotEqual(type(new.number_rooms), int)
-
-    def test_number_bathrooms(self):
-        """ Tests number of bathrooms"""
-        new = self.value()
-        self.assertNotEqual(type(new.number_bathrooms), int)
-
-    def test_max_guest(self):
-        """ Tests the maximum number of guests"""
-        new = self.value()
-        self.assertNotEqual(type(new.max_guest), int)
-
-    def test_price_by_night(self):
-        """ Tests the price per night """
-        new = self.value()
-        self.assertNotEqual(type(new.price_by_night), int)
-
-    def test_latitude(self):
-        """ Tests the latitude of the location """
-        new = self.value()
-        self.assertNotEqual(type(new.latitude), float)
-
-    def test_longitude(self):
-        """ Tests longitude of house location """
-        new = self.value()
-        self.assertNotEqual(type(new.latitude), float)
-
-    def test_amenity_ids(self):
-        """ Tests the amenity id """
-        new = self.value()
-        self.assertEqual(type(new.amenity_ids), list)
+if __name__ == "__main__":
+    unittest.main()

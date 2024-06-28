@@ -1,34 +1,37 @@
 #!/usr/bin/python3
-"""User class tests"""
-from tests.test_models.test_base_model import test_basemodel
+
+import unittest
+from datetime import datetime
 from models.user import User
+from models.base_model import BaseModel
 
 
-class test_User(test_basemodel):
-    """ """
+class TestUser(unittest.TestCase):
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "User"
-        self.value = User
+    @classmethod
+    def setUpClass(cls):
+        cls.user = User("aibnb@mail.com", "12345678", "Mariella", "Johnson")
 
-    def test_first_name(self):
-        """ """
-        new = self.value()
-        self.assertNotEqual(type(new.first_name), str)
+    @classmethod
+    def tearDownClass(cls):
+        del cls.user
 
-    def test_last_name(self):
-        """ """
-        new = self.value()
-        self.assertNotEqual(type(new.last_name), str)
+    def Test_user_inheritence(self):
+        self.assertIsInstance(self.user, BaseModel)
+        self.assertTrue(hasattr(self.user, "id"))
+        self.assertTrue(hasattr(self.user, "created_at"))
+        self.assertTrue(hasattr(self.user, "updated_at"))
 
-    def test_email(self):
-        """ """
-        new = self.value()
-        self.assertNotEqual(type(new.email), str)
+    def Test_user(self):
+        self.assertIsInstance(self.user, User)
+        self.assertTrue(self.user.email == "aibnb@mail.com")
+        self.assertTrue(self.user.password == "12345678")
+        self.assertTrue(self.user.first_name == "Mariella")
+        self.assertTrue(self.user.last_name == "Johnson")
+        self.assertIsInstance(self.user.id, str)
+        self.assertIsInstance(self.user.created_at, datetime)
+        self.assertIsInstance(self.user.updated_at, datetime)
 
-    def test_password(self):
-        """ """
-        new = self.value()
-        self.assertNotEqual(type(new.password), str)
+
+if __name__ == "__main__":
+    unittest.main()

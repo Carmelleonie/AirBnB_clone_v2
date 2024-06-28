@@ -1,19 +1,31 @@
 #!/usr/bin/python3
-"""Amenity class tests"""
-from tests.test_models.test_base_model import test_basemodel
+
+import unittest
 from models.amenity import Amenity
+from models.base_model import BaseModel
+from datetime import datetime
 
 
-class test_Amenity(test_basemodel):
-    """ """
+class TestAmenity(unittest.TestCase):
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Amenity"
-        self.value = Amenity
+    @classmethod
+    def setUpClass(cls):
+        cls.ame = Amenity(name="Eden")
 
-    def test_name2(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+    @classmethod
+    def tearDownClass(cls):
+        del cls.ame
+
+    def test_amenity_inheritance(self):
+        self.assertIsInstance(self.ame, BaseModel)
+
+    def test_amenity_intialisation(self):
+        self.assertIsInstance(self.ame, Amenity)
+        self.assertIsInstance(self.ame.id, str)
+        self.assertIsInstance(self.ame.created_at, datetime)
+        self.assertIsInstance(self.ame.updated_at, datetime)
+        self.assertEqual(self.ame.name, "Eden")
+
+
+if __name__ == "__main__":
+    unittest.main()
