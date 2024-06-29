@@ -37,3 +37,10 @@ class FileStorage:
             pass
         except json.JSONDecodeError:
             pass
+
+    def delete(self, obj=None):
+        if obj:
+            _index = "{}.{}".format(obj.__class__name, obj.id)
+            if _index in self.__objects:
+                del self.__objects[_index]
+
