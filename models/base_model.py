@@ -2,9 +2,10 @@
 
 import uuid
 from datetime import datetime
+from sqlalchemy.ext.declarative import declarative_base
 import models
 
-
+Base = declarative_base()
 class BaseModel:
 
     def __init__(self, *args, **kwargs):
@@ -46,3 +47,4 @@ class BaseModel:
 
     def __str__(self):
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+

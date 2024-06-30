@@ -11,3 +11,4 @@ if type_of_db == 'db':
 else:
     storage = FileStorage()
     storage.reload()
+
